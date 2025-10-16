@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tỷ Giá & Tác Động Tới Ngành Xăng Dầu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutrals (Stone, Slate, Teal) -->
+    <!-- Application Structure Plan: A single-page, scroll-based educational narrative. It starts with the basic definition of an exchange rate, provides a hands-on simulator for tangible understanding, then connects this concept to the petroleum industry. The core is an interactive analysis section where users can toggle between rising and falling exchange rate scenarios to see the direct impact on import costs visualized in a dynamic chart and explained in adjacent text. This guided, interactive flow is chosen to make a complex economic topic accessible and easy to digest for a general audience. -->
+    <!-- Visualization & Content Choices: 1. Definition: HTML/CSS diagram for simplicity and clarity (Goal: Inform). 2. Simulator: Slider and input fields for hands-on learning (Goal: Engage, Inform). 3. Petroleum Link: HTML/CSS flowchart to show the process (Goal: Organize). 4. Impact Analysis: A dynamic Chart.js bar chart paired with toggle buttons and updating text blocks. This allows direct comparison and shows change effectively (Goal: Compare, Change). The chart visually reinforces the text, making the cause-and-effect relationship intuitive. Justification: These choices prioritize interactivity and direct feedback to enhance user understanding over static presentation. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flow-arrow {
+            position: relative;
+            padding: 0 40px;
+        }
+        .flow-arrow::after {
+            content: '→';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) scale(2);
+            color: #0d9488;
+        }
+        .btn-active {
+            background-color: #0d9488 !important;
+            color: white !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0d9488;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-teal-700">Tỷ Giá & Ngành Xăng Dầu</h1>
+            <nav class="hidden md:flex space-x-6 text-slate-600">
+                <a href="#section-1" class="hover:text-teal-600">Tỷ giá là gì?</a>
+                <a href="#section-2" class="hover:text-teal-600">Mô phỏng</a>
+                <a href="#section-3" class="hover:text-teal-600">Tác động</a>
+                <a href="#section-5" class="hover:text-teal-600">Phân tích AI</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <section id="section-1" class="mb-16 text-center">
+            <h2 class="text-3xl font-bold mb-4 text-slate-800">1. Tỷ Giá Hối Đoái Là Gì?</h2>
+            <p class="max-w-3xl mx-auto text-lg mb-8 text-slate-600">
+                Hiểu một cách đơn giản, tỷ giá hối đoái là giá của một đồng tiền này khi được quy đổi sang một đồng tiền khác. Nó cho biết bạn cần bao nhiêu đơn vị tiền tệ của quốc gia B để mua một đơn vị tiền tệ của quốc gia A.
+            </p>
+            <div class="flex justify-center items-center space-x-4 md:space-x-8 p-6 bg-white rounded-xl shadow-lg max-w-xl mx-auto">
+                <div class="text-center">
+                    <span class="text-5xl">🇺🇸</span>
+                    <p class="font-semibold mt-2">1 USD</p>
+                </div>
+                <div class="text-5xl font-light text-slate-400">≈</div>
+                <div class="text-center">
+                    <span class="text-5xl">🇻🇳</span>
+                    <p class="font-semibold mt-2">25,450 VND</p>
+                    <p class="text-xs text-slate-500">(Ví dụ)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-2" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">2. Mô Phỏng Tương Tác</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Hãy thử thay đổi tỷ giá để xem giá của một món hàng nhập khẩu thay đổi như thế nào.</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-xl shadow-lg">
+                <div>
+                    <div class="mb-6">
+                        <label for="usd-price" class="block font-medium mb-2">Giá sản phẩm (USD)</label>
+                        <input type="number" id="usd-price" value="80" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none">
+                    </div>
+                    <div>
+                        <label for="exchange-rate-slider" class="block font-medium mb-2">Tỷ giá USD/VND: <span id="rate-display" class="font-bold text-teal-600">25,000</span></label>
+                        <input type="range" id="exchange-rate-slider" min="23000" max="27000" step="50" value="25000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                </div>
+                <div class="text-center bg-teal-50 p-8 rounded-xl">
+                    <p class="text-lg text-slate-600 mb-2">Giá quy đổi sang VND</p>
+                    <p id="vnd-price" class="text-4xl font-bold text-teal-700">2,000,000 VND</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-3" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">3. Tỷ Giá Ảnh Hưởng Tới Xăng Dầu Như Thế Nào?</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">
+                Việt Nam nhập khẩu một phần lớn dầu thô và xăng thành phẩm từ thị trường thế giới. Tất cả các giao dịch này đều được thanh toán bằng đồng Đô la Mỹ (USD).
+            </p>
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <p class="text-center font-semibold mb-6 text-lg">Quy trình cơ bản:</p>
+                <div class="flex flex-col md:flex-row justify-around items-center text-center">
+                    <div class="mb-6 md:mb-0 md:flow-arrow">
+                        <div class="w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2">🛢️</div>
+                        <h3 class="font-bold">Thị trường Thế giới</h3>
+                        <p class="text-sm">Giá dầu được niêm yết<br>và giao dịch bằng <span class="font-bold text-red-600">USD</span></p>
+                    </div>
+                    <div class="mb-6 md:mb-0 md:flow-arrow">
+                        <div class="w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2">🏢</div>
+                        <h3 class="font-bold">Doanh nghiệp Việt Nam</h3>
+                        <p class="text-sm">Phải dùng VND mua USD<br>để thanh toán tiền hàng</p>
+                    </div>
+                    <div>
+                        <div class="w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2">⛽</div>
+                        <h3 class="font-bold">Người tiêu dùng Việt Nam</h3>
+                        <p class="text-sm">Mua xăng tại cây xăng<br>bằng <span class="font-bold text-blue-600">VND</span></p>
+                    </div>
+                </div>
+                <p class="mt-8 text-center text-slate-600 bg-slate-50 p-4 rounded-lg">
+                    Do đó, bất kỳ sự thay đổi nào của tỷ giá USD/VND đều ảnh hưởng trực tiếp đến <span class="font-bold">chi phí đầu vào</span> của các doanh nghiệp xăng dầu, và cuối cùng là <span class="font-bold">giá bán lẻ</span> đến tay người dân.
+                </p>
+            </div>
+        </section>
+        
+        <section id="section-4" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">4. Phân Tích Kịch Bản Tác Động</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Chọn một kịch bản để xem tỷ giá tác động đến chi phí nhập khẩu một thùng dầu như thế nào.</p>
+            
+            <div class="flex justify-center space-x-4 mb-8">
+                <button id="btn-increase" class="px-6 py-2 border border-slate-300 rounded-full hover:bg-teal-600 hover:text-white transition duration-200 btn-active">Khi Tỷ Giá TĂNG 📈</button>
+                <button id="btn-decrease" class="px-6 py-2 border border-slate-300 rounded-full hover:bg-teal-600 hover:text-white transition duration-200">Khi Tỷ Giá GIẢM 📉</button>
+            </div>
+
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg grid md:grid-cols-5 gap-8 items-center">
+                <div class="md:col-span-2">
+                    <h3 id="scenario-title" class="text-xl font-bold mb-4 text-teal-700">Kịch bản 1: Tỷ giá USD/VND tăng (VND mất giá)</h3>
+                    <div id="scenario-text" class="space-y-4 text-slate-600">
+                        <p>Giả sử tỷ giá tăng từ <span class="font-semibold">25,000</span> lên <span class="font-semibold">26,000</span> VND/USD.</p>
+                        <p>Doanh nghiệp sẽ phải bỏ ra nhiều tiền Việt hơn để mua cùng một lượng USD. Điều này làm <span class="font-bold text-red-600">tăng chi phí đầu vào</span> bằng VND, dù giá dầu thế giới không đổi.</p>
+                        <p class="p-3 bg-red-50 text-red-800 rounded-lg">➡️ <span class="font-bold">Tác động tiêu cực:</span> Gây áp lực làm tăng giá bán lẻ xăng dầu trong nước để bù đắp chi phí.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-3">
+                    <div class="chart-container">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-5" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">5. Hỏi Chuyên Gia Kinh Tế AI</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Bạn có thắc mắc về kinh tế? Hãy hỏi chuyên gia AI của chúng tôi để được giải thích đơn giản.</p>
+            <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                <div class="mb-4">
+                    <textarea id="ai-expert-question" rows="3" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none" placeholder="Ví dụ: Lạm phát là gì?"></textarea>
+                </div>
+                <button id="ask-expert-btn" class="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-700 transition duration-200 flex items-center justify-center">
+                    Gửi câu hỏi
+                </button>
+                <div id="expert-loader" class="mt-6 hidden justify-center">
+                    <div class="loader"></div>
+                </div>
+                <div id="expert-answer" class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-slate-700 leading-relaxed" style="display: none;"></div>
+            </div>
+        </section>
+
+        <section id="section-6">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">6. Phân Tích Tác Động Từ Tin Tức</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Nhập một chủ đề tin tức (ví dụ: "OPEC cắt giảm sản lượng") để AI phân tích tác động tiềm tàng đến giá xăng Việt Nam.</p>
+            <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="text" id="news-topic-input" class="flex-grow p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none" placeholder="Nhập chủ đề tin tức ở đây...">
+                    <button id="analyze-news-btn" class="bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition duration-200 flex items-center justify-center">
+                        ✨ Phân tích
+                    </button>
+                </div>
+                 <div id="news-loader" class="mt-6 hidden justify-center">
+                    <div class="loader"></div>
+                </div>
+                <div id="news-analysis" class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-slate-700 leading-relaxed" style="display: none;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-6 text-center text-slate-400">
+            <p>&copy; 2025 - Phân tích bởi AI. Thông tin chỉ mang tính chất tham khảo và minh họa.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const usdPriceInput = document.getElementById('usd-price');
+            const rateSlider = document.getElementById('exchange-rate-slider');
+            const rateDisplay = document.getElementById('rate-display');
+            const vndPriceDisplay = document.getElementById('vnd-price');
+
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0
+            });
+
+            function updateSimulator() {
+                const usdPrice = parseFloat(usdPriceInput.value) || 0;
+                const rate = parseFloat(rateSlider.value);
+                const vndPrice = usdPrice * rate;
+
+                rateDisplay.textContent = new Intl.NumberFormat('vi-VN').format(rate);
+                vndPriceDisplay.textContent = formatter.format(vndPrice);
+            }
+
+            usdPriceInput.addEventListener('input', updateSimulator);
+            rateSlider.addEventListener('input', updateSimulator);
+            
+            updateSimulator();
+
+            const scenarioTitle = document.getElementById('scenario-title');
+            const scenarioText = document.getElementById('scenario-text');
+            const btnIncrease = document.getElementById('btn-increase');
+            const btnDecrease = document.getElementById('btn-decrease');
+
+            const textIncrease = `
+                <p>Giả sử tỷ giá tăng từ <span class="font-semibold">25,000</span> lên <span class="font-semibold">26,000</span> VND/USD.</p>
+                <p>Doanh nghiệp sẽ phải bỏ ra nhiều tiền Việt hơn để mua cùng một lượng USD. Điều này làm <span class="font-bold text-red-600">tăng chi phí đầu vào</span> bằng VND, dù giá dầu thế giới không đổi.</p>
+                <p class="p-3 bg-red-50 text-red-800 rounded-lg">➡️ <span class="font-bold">Tác động tiêu cực:</span> Gây áp lực làm tăng giá bán lẻ xăng dầu trong nước để bù đắp chi phí.</p>
+            `;
+            const textDecrease = `
+                <p>Giả sử tỷ giá giảm từ <span class="font-semibold">25,000</span> xuống <span class="font-semibold">24,000</span> VND/USD.</p>
+                <p>Doanh nghiệp sẽ chỉ cần bỏ ra ít tiền Việt hơn để mua cùng một lượng USD. Điều này làm <span class="font-bold text-green-600">giảm chi phí đầu vào</span> bằng VND.</p>
+                <p class="p-3 bg-green-50 text-green-800 rounded-lg">➡️ <span class="font-bold">Tác động tích cực:</span> Giảm áp lực lên giá bán lẻ, có thể giúp bình ổn hoặc giảm giá xăng dầu.</p>
+            `;
+
+            const basePriceUSD = 80;
+            const baseRate = 25000;
+            const increasedRate = 26000;
+            const decreasedRate = 24000;
+
+            const baseCostVND = basePriceUSD * baseRate;
+            const increasedCostVND = basePriceUSD * increasedRate;
+            const decreasedCostVND = basePriceUSD * decreasedRate;
+
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Giá Gốc (VND)', 'Giá Sau Thay Đổi (VND)'],
+                    datasets: [{
+                        label: 'Chi phí nhập khẩu 1 thùng dầu (VND)',
+                        data: [baseCostVND, increasedCostVND],
+                        backgroundColor: ['rgba(59, 130, 246, 0.6)', 'rgba(239, 68, 68, 0.6)'],
+                        borderColor: ['rgba(59, 130, 246, 1)', 'rgba(239, 68, 68, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { callback: (v) => new Intl.NumberFormat('vi-VN').format(v) + ' ₫' } } },
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.dataset.label || ''}: ${formatter.format(c.parsed.y)}` } } }
+                }
+            });
+
+            function updateScenario(type) {
+                if (type === 'increase') {
+                    btnIncrease.classList.add('btn-active');
+                    btnDecrease.classList.remove('btn-active');
+                    scenarioTitle.textContent = 'Kịch bản 1: Tỷ giá USD/VND tăng (VND mất giá)';
+                    scenarioText.innerHTML = textIncrease;
+                    impactChart.data.datasets[0].data = [baseCostVND, increasedCostVND];
+                    impactChart.data.datasets[0].backgroundColor = ['rgba(59, 130, 246, 0.6)', 'rgba(239, 68, 68, 0.6)'];
+                    impactChart.data.datasets[0].borderColor = ['rgba(59, 130, 246, 1)', 'rgba(239, 68, 68, 1)'];
+
+                } else {
+                    btnDecrease.classList.add('btn-active');
+                    btnIncrease.classList.remove('btn-active');
+                    scenarioTitle.textContent = 'Kịch bản 2: Tỷ giá USD/VND giảm (VND lên giá)';
+                    scenarioText.innerHTML = textDecrease;
+                    impactChart.data.datasets[0].data = [baseCostVND, decreasedCostVND];
+                    impactChart.data.datasets[0].backgroundColor = ['rgba(59, 130, 246, 0.6)', 'rgba(22, 163, 74, 0.6)'];
+                    impactChart.data.datasets[0].borderColor = ['rgba(59, 130, 246, 1)', 'rgba(22, 163, 74, 1)'];
+                }
+                impactChart.update();
+            }
+
+            btnIncrease.addEventListener('click', () => updateScenario('increase'));
+            btnDecrease.addEventListener('click', () => updateScenario('decrease'));
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            function formatResponseText(text) {
+                return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+            }
+
+            async function callGeminiAPI(prompt, systemInstruction = null, useSearch = false, retries = 3, delay = 1000) {
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                if (useSearch) payload.tools = [{ "google_search": {} }];
+                if (systemInstruction) payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        const result = await response.json();
+                        const candidate = result.candidates?.[0];
+                        if (candidate && candidate.content?.parts?.[0]?.text) {
+                            return candidate.content.parts[0].text;
+                        } else {
+                            throw new Error("Invalid response structure from API.");
+                        }
+                    } catch (error) {
+                        console.error(`Attempt ${i + 1} failed:`, error);
+                        if (i === retries - 1) return "Đã xảy ra lỗi khi kết nối đến AI. Vui lòng thử lại sau.";
+                        await new Promise(res => setTimeout(res, delay));
+                        delay *= 2;
+                    }
+                }
+            }
+
+            const askExpertBtn = document.getElementById('ask-expert-btn');
+            const expertQuestionInput = document.getElementById('ai-expert-question');
+            const expertAnswerDiv = document.getElementById('expert-answer');
+            const expertLoader = document.getElementById('expert-loader');
+            
+            askExpertBtn.addEventListener('click', async () => {
+                const question = expertQuestionInput.value.trim();
+                if (!question) return;
+
+                expertAnswerDiv.style.display = 'none';
+                expertLoader.style.display = 'flex';
+                askExpertBtn.disabled = true;
+
+                const systemInstruction = "Bạn là một chuyên gia kinh tế thân thiện. Hãy trả lời các câu hỏi về kinh tế, tài chính, và các chủ đề liên quan một cách đơn giản, rõ ràng và dễ hiểu cho người không có chuyên môn. Sử dụng ví dụ từ Việt Nam khi phù hợp.";
+                const response = await callGeminiAPI(question, systemInstruction, false);
+
+                expertAnswerDiv.innerHTML = formatResponseText(response);
+                expertLoader.style.display = 'none';
+                expertAnswerDiv.style.display = 'block';
+                askExpertBtn.disabled = false;
+            });
+
+            const analyzeNewsBtn = document.getElementById('analyze-news-btn');
+            const newsTopicInput = document.getElementById('news-topic-input');
+            const newsAnalysisDiv = document.getElementById('news-analysis');
+            const newsLoader = document.getElementById('news-loader');
+
+            analyzeNewsBtn.addEventListener('click', async () => {
+                const topic = newsTopicInput.value.trim();
+                if (!topic) return;
+
+                newsAnalysisDiv.style.display = 'none';
+                newsLoader.style.display = 'flex';
+                analyzeNewsBtn.disabled = true;
+
+                const prompt = `Dựa trên những thông tin mới nhất từ tìm kiếm trên web, hãy phân tích ngắn gọn những tác động có thể có của chủ đề sau đây đối với giá xăng dầu tại Việt Nam: "${topic}". Trình bày các điểm chính một cách rõ ràng và súc tích.`;
+                const response = await callGeminiAPI(prompt, null, true);
+
+                newsAnalysisDiv.innerHTML = formatResponseText(response);
+                newsLoader.style.display = 'none';
+                newsAnalysisDiv.style.display = 'block';
+                analyzeNewsBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
+
