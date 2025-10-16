@@ -1,431 +1,408 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2761
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
-{\colortbl;\red255\green255\blue255;\red109\green109\blue109;\red236\green241\blue247;\red251\green0\blue7;
-\red0\green0\blue0;\red42\green42\blue42;\red107\green0\blue1;\red0\green0\blue255;\red77\green80\blue85;
-\red24\green112\blue43;\red9\green60\blue148;\red19\green118\blue70;\red111\green14\blue195;\red14\green110\blue109;
-\red164\green69\blue11;}
-{\*\expandedcolortbl;;\cssrgb\c50196\c50196\c50196;\cssrgb\c94118\c95686\c97647;\cssrgb\c100000\c0\c0;
-\cssrgb\c0\c0\c0;\cssrgb\c21961\c21961\c21961;\cssrgb\c50196\c0\c0;\cssrgb\c0\c0\c100000;\cssrgb\c37255\c38824\c40784;
-\cssrgb\c9412\c50196\c21961;\cssrgb\c1569\c31765\c64706;\cssrgb\c3529\c52549\c34510;\cssrgb\c51765\c18824\c80784;\cssrgb\c0\c50196\c50196;
-\cssrgb\c70980\c34902\c3137;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tỷ Giá & Tác Động Tới Ngành Xăng Dầu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Neutrals (Stone, Slate, Teal) -->
+    <!-- Application Structure Plan: A single-page, scroll-based educational narrative. It starts with the basic definition of an exchange rate, provides a hands-on simulator for tangible understanding, then connects this concept to the petroleum industry. The core is an interactive analysis section where users can toggle between rising and falling exchange rate scenarios to see the direct impact on import costs visualized in a dynamic chart and explained in adjacent text. This guided, interactive flow is chosen to make a complex economic topic accessible and easy to digest for a general audience. -->
+    <!-- Visualization & Content Choices: 1. Definition: HTML/CSS diagram for simplicity and clarity (Goal: Inform). 2. Simulator: Slider and input fields for hands-on learning (Goal: Engage, Inform). 3. Petroleum Link: HTML/CSS flowchart to show the process (Goal: Organize). 4. Impact Analysis: A dynamic Chart.js bar chart paired with toggle buttons and updating text blocks. This allows direct comparison and shows change effectively (Goal: Compare, Change). The chart visually reinforces the text, making the cause-and-effect relationship intuitive. Justification: These choices prioritize interactivity and direct feedback to enhance user understanding over static presentation. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8fafc;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .flow-arrow {
+            position: relative;
+            padding: 0 40px;
+        }
+        .flow-arrow::after {
+            content: '→';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%) scale(2);
+            color: #0d9488;
+        }
+        .btn-active {
+            background-color: #0d9488 !important;
+            color: white !important;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0d9488;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="text-slate-700">
 
-\f0\fs28 \cf2 \cb3 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 <!DOCTYPE\cf4 \strokec4  html\cf2 \strokec2 >\cf0 \cb1 \strokec5 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 <\cf7 \strokec7 html\cf0 \strokec5  \cf4 \strokec4 lang\cf6 \strokec6 =\cf8 \strokec8 "vi"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cf6 \cb3 \strokec6 <\cf7 \strokec7 head\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\pard\pardeftab720\partightenfactor0
-\cf0 \cb3     \cf6 \strokec6 <\cf7 \strokec7 meta\cf0 \strokec5  \cf4 \strokec4 charset\cf6 \strokec6 =\cf8 \strokec8 "UTF-8"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 meta\cf0 \strokec5  \cf4 \strokec4 name\cf6 \strokec6 =\cf8 \strokec8 "viewport"\cf0 \strokec5  \cf4 \strokec4 content\cf6 \strokec6 =\cf8 \strokec8 "width=device-width, initial-scale=1.0"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 title\cf6 \strokec6 >\cf0 \strokec5 T\uc0\u7927  Gi\'e1 & T\'e1c \u272 \u7897 ng T\u7899 i Ng\'e0nh X\u259 ng D\u7847 u\cf6 \strokec6 </\cf7 \strokec7 title\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 script\cf0 \strokec5  \cf4 \strokec4 src\cf6 \strokec6 =\cf8 \strokec8 "https://cdn.tailwindcss.com"\cf6 \strokec6 ></\cf7 \strokec7 script\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 script\cf0 \strokec5  \cf4 \strokec4 src\cf6 \strokec6 =\cf8 \strokec8 "https://cdn.jsdelivr.net/npm/chart.js"\cf6 \strokec6 ></\cf7 \strokec7 script\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 link\cf0 \strokec5  \cf4 \strokec4 rel\cf6 \strokec6 =\cf8 \strokec8 "preconnect"\cf0 \strokec5  \cf4 \strokec4 href\cf6 \strokec6 =\cf8 \strokec8 "https://fonts.googleapis.com"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 link\cf0 \strokec5  \cf4 \strokec4 rel\cf6 \strokec6 =\cf8 \strokec8 "preconnect"\cf0 \strokec5  \cf4 \strokec4 href\cf6 \strokec6 =\cf8 \strokec8 "https://fonts.gstatic.com"\cf0 \strokec5  \cf4 \strokec4 crossorigin\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 link\cf0 \strokec5  \cf4 \strokec4 href\cf6 \strokec6 =\cf8 \strokec8 "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap"\cf0 \strokec5  \cf4 \strokec4 rel\cf6 \strokec6 =\cf8 \strokec8 "stylesheet"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf9 \strokec9 <!-- Chosen Palette: Calm Neutrals (Stone, Slate, Teal) -->\cf0 \cb1 \strokec5 \
-\cb3     \cf9 \strokec9 <!-- Application Structure Plan: A single-page, scroll-based educational narrative. It starts with the basic definition of an exchange rate, provides a hands-on simulator for tangible understanding, then connects this concept to the petroleum industry. The core is an interactive analysis section where users can toggle between rising and falling exchange rate scenarios to see the direct impact on import costs visualized in a dynamic chart and explained in adjacent text. This guided, interactive flow is chosen to make a complex economic topic accessible and easy to digest for a general audience. -->\cf0 \cb1 \strokec5 \
-\cb3     \cf9 \strokec9 <!-- Visualization & Content Choices: 1. Definition: HTML/CSS diagram for simplicity and clarity (Goal: Inform). 2. Simulator: Slider and input fields for hands-on learning (Goal: Engage, Inform). 3. Petroleum Link: HTML/CSS flowchart to show the process (Goal: Organize). 4. Impact Analysis: A dynamic Chart.js bar chart paired with toggle buttons and updating text blocks. This allows direct comparison and shows change effectively (Goal: Compare, Change). The chart visually reinforces the text, making the cause-and-effect relationship intuitive. Justification: These choices prioritize interactivity and direct feedback to enhance user understanding over static presentation. -->\cf0 \cb1 \strokec5 \
-\cb3     \cf9 \strokec9 <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 style\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf7 \strokec7 body\cf0 \strokec5  \{\cb1 \
-\cb3             \cf4 \strokec4 font-family:\cf0 \strokec5  \cf10 \strokec10 'Be Vietnam Pro'\cf0 \strokec5 , \cf11 \strokec11 sans-serif\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 background-color:\cf0 \strokec5  \cf11 \strokec11 #f8fafc\cf0 \strokec5 ;\cb1 \
-\cb3         \}\cb1 \
-\cb3         \cf7 \strokec7 .chart-container\cf0 \strokec5  \{\cb1 \
-\cb3             \cf4 \strokec4 position:\cf0 \strokec5  \cf11 \strokec11 relative\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 width:\cf0 \strokec5  \cf12 \strokec12 100%\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 max-width:\cf0 \strokec5  \cf12 \strokec12 600px\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 margin-left:\cf0 \strokec5  \cf11 \strokec11 auto\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 margin-right:\cf0 \strokec5  \cf11 \strokec11 auto\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 height:\cf0 \strokec5  \cf12 \strokec12 350px\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 max-height:\cf0 \strokec5  \cf12 \strokec12 400px\cf0 \strokec5 ;\cb1 \
-\cb3         \}\cb1 \
-\cb3         @\cf7 \strokec7 media\cf0 \strokec5  (\cf7 \strokec7 min-width:\cf0 \strokec5  768\cf7 \strokec7 px\cf0 \strokec5 ) \{\cb1 \
-\cb3             .chart-container \{\cb1 \
-\cb3                 \cf4 \strokec4 height:\cf0 \strokec5  \cf12 \strokec12 400px\cf0 \strokec5 ;\cb1 \
-\cb3             \}\cb1 \
-\cb3         \}\cb1 \
-\cb3         \cf7 \strokec7 .flow-arrow\cf0 \strokec5  \{\cb1 \
-\cb3             \cf4 \strokec4 position:\cf0 \strokec5  \cf11 \strokec11 relative\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 padding:\cf0 \strokec5  \cf12 \strokec12 0\cf0 \strokec5  \cf12 \strokec12 40px\cf0 \strokec5 ;\cb1 \
-\cb3         \}\cb1 \
-\cb3         \cf7 \strokec7 .flow-arrow::after\cf0 \strokec5  \{\cb1 \
-\cb3             \cf4 \strokec4 content:\cf0 \strokec5  \cf10 \strokec10 '\uc0\u8594 '\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 position:\cf0 \strokec5  \cf11 \strokec11 absolute\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 right:\cf0 \strokec5  \cf12 \strokec12 0\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 top:\cf0 \strokec5  \cf12 \strokec12 50%\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 transform:\cf0 \strokec5  \cf11 \strokec11 translateY(\cf12 \strokec12 -50%\cf11 \strokec11 )\cf0 \strokec5  \cf11 \strokec11 scale(\cf12 \strokec12 2\cf11 \strokec11 )\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 color:\cf0 \strokec5  \cf11 \strokec11 #0d9488\cf0 \strokec5 ;\cb1 \
-\cb3         \}\cb1 \
-\cb3         \cf7 \strokec7 .btn-active\cf0 \strokec5  \{\cb1 \
-\cb3             \cf4 \strokec4 background-color:\cf0 \strokec5  \cf11 \strokec11 #0d9488\cf0 \strokec5  \cf13 \strokec13 !important\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 color:\cf0 \strokec5  \cf11 \strokec11 white\cf0 \strokec5  \cf13 \strokec13 !important\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 box-shadow:\cf0 \strokec5  \cf12 \strokec12 0\cf0 \strokec5  \cf12 \strokec12 4px\cf0 \strokec5  \cf12 \strokec12 6px\cf0 \strokec5  \cf12 \strokec12 -1px\cf0 \strokec5  \cf11 \strokec11 rgb(\cf12 \strokec12 0\cf0 \strokec5  \cf12 \strokec12 0\cf0 \strokec5  \cf12 \strokec12 0\cf0 \strokec5  / \cf12 \strokec12 0.1\cf11 \strokec11 )\cf0 \strokec5 , \cf12 \strokec12 0\cf0 \strokec5  \cf12 \strokec12 2px\cf0 \strokec5  \cf12 \strokec12 4px\cf0 \strokec5  \cf12 \strokec12 -2px\cf0 \strokec5  \cf11 \strokec11 rgb(\cf12 \strokec12 0\cf0 \strokec5  \cf12 \strokec12 0\cf0 \strokec5  \cf12 \strokec12 0\cf0 \strokec5  / \cf12 \strokec12 0.1\cf11 \strokec11 )\cf0 \strokec5 ;\cb1 \
-\cb3         \}\cb1 \
-\cb3         \cf7 \strokec7 .loader\cf0 \strokec5  \{\cb1 \
-\cb3             \cf4 \strokec4 border:\cf0 \strokec5  \cf12 \strokec12 4px\cf0 \strokec5  \cf11 \strokec11 solid\cf0 \strokec5  \cf11 \strokec11 #f3f3f3\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 border-top:\cf0 \strokec5  \cf12 \strokec12 4px\cf0 \strokec5  \cf11 \strokec11 solid\cf0 \strokec5  \cf11 \strokec11 #0d9488\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 border-radius:\cf0 \strokec5  \cf12 \strokec12 50%\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 width:\cf0 \strokec5  \cf12 \strokec12 32px\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 height:\cf0 \strokec5  \cf12 \strokec12 32px\cf0 \strokec5 ;\cb1 \
-\cb3             \cf4 \strokec4 animation:\cf0 \strokec5  \cf11 \strokec11 spin\cf0 \strokec5  \cf12 \strokec12 1s\cf0 \strokec5  \cf11 \strokec11 linear\cf0 \strokec5  \cf11 \strokec11 infinite\cf0 \strokec5 ;\cb1 \
-\cb3         \}\cb1 \
-\cb3         \cf13 \strokec13 @keyframes\cf0 \strokec5  \cf11 \strokec11 spin\cf0 \strokec5  \{\cb1 \
-\cb3             \cf12 \strokec12 0%\cf0 \strokec5  \{ \cf4 \strokec4 transform:\cf0 \strokec5  \cf11 \strokec11 rotate(\cf12 \strokec12 0deg\cf11 \strokec11 )\cf0 \strokec5 ; \}\cb1 \
-\cb3             \cf12 \strokec12 100%\cf0 \strokec5  \{ \cf4 \strokec4 transform:\cf0 \strokec5  \cf11 \strokec11 rotate(\cf12 \strokec12 360deg\cf11 \strokec11 )\cf0 \strokec5 ; \}\cb1 \
-\cb3         \}\cb1 \
-\cb3     \cf6 \strokec6 </\cf7 \strokec7 style\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 </\cf7 \strokec7 head\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cf6 \cb3 \strokec6 <\cf7 \strokec7 body\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-slate-700"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf0 \cb3     \cf6 \strokec6 <\cf7 \strokec7 header\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "bg-white shadow-sm sticky top-0 z-10"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "container mx-auto px-4 py-4 flex justify-between items-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 h1\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-xl md:text-2xl font-bold text-teal-700"\cf6 \strokec6 >\cf0 \strokec5 T\uc0\u7927  Gi\'e1 & Ng\'e0nh X\u259 ng D\u7847 u\cf6 \strokec6 </\cf7 \strokec7 h1\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 nav\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "hidden md:flex space-x-6 text-slate-600"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 a\cf0 \strokec5  \cf4 \strokec4 href\cf6 \strokec6 =\cf8 \strokec8 "#section-1"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "hover:text-teal-600"\cf6 \strokec6 >\cf0 \strokec5 T\uc0\u7927  gi\'e1 l\'e0 g\'ec?\cf6 \strokec6 </\cf7 \strokec7 a\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 a\cf0 \strokec5  \cf4 \strokec4 href\cf6 \strokec6 =\cf8 \strokec8 "#section-2"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "hover:text-teal-600"\cf6 \strokec6 >\cf0 \strokec5 M\'f4 ph\uc0\u7887 ng\cf6 \strokec6 </\cf7 \strokec7 a\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 a\cf0 \strokec5  \cf4 \strokec4 href\cf6 \strokec6 =\cf8 \strokec8 "#section-3"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "hover:text-teal-600"\cf6 \strokec6 >\cf0 \strokec5 T\'e1c \uc0\u273 \u7897 ng\cf6 \strokec6 </\cf7 \strokec7 a\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 a\cf0 \strokec5  \cf4 \strokec4 href\cf6 \strokec6 =\cf8 \strokec8 "#section-5"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "hover:text-teal-600"\cf6 \strokec6 >\cf0 \strokec5 Ph\'e2n t\'edch AI\cf6 \strokec6 </\cf7 \strokec7 a\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 nav\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 </\cf7 \strokec7 header\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 main\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "container mx-auto px-4 py-8 md:py-12"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 section\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "section-1"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-16 text-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 h2\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-3xl font-bold mb-4 text-slate-800"\cf6 \strokec6 >\cf0 \strokec5 1. T\uc0\u7927  Gi\'e1 H\u7889 i \u272 o\'e1i L\'e0 G\'ec?\cf6 \strokec6 </\cf7 \strokec7 h2\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "max-w-3xl mx-auto text-lg mb-8 text-slate-600"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 Hi\uc0\u7875 u m\u7897 t c\'e1ch \u273 \u417 n gi\u7843 n, t\u7927  gi\'e1 h\u7889 i \u273 o\'e1i l\'e0 gi\'e1 c\u7911 a m\u7897 t \u273 \u7891 ng ti\u7873 n n\'e0y khi \u273 \u432 \u7907 c quy \u273 \u7893 i sang m\u7897 t \u273 \u7891 ng ti\u7873 n kh\'e1c. N\'f3 cho bi\u7871 t b\u7841 n c\u7847 n bao nhi\'eau \u273 \u417 n v\u7883  ti\u7873 n t\u7879  c\u7911 a qu\u7889 c gia B \u273 \u7875  mua m\u7897 t \u273 \u417 n v\u7883  ti\u7873 n t\u7879  c\u7911 a qu\u7889 c gia A.\cb1 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "flex justify-center items-center space-x-4 md:space-x-8 p-6 bg-white rounded-xl shadow-lg max-w-xl mx-auto"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-5xl"\cf6 \strokec6 >\cf0 \strokec5 \uc0\u55356 \u56826 \u55356 \u56824 \cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-semibold mt-2"\cf6 \strokec6 >\cf0 \strokec5 1 USD\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-5xl font-light text-slate-400"\cf6 \strokec6 >\cf0 \strokec5 \uc0\u8776 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-5xl"\cf6 \strokec6 >\cf0 \strokec5 \uc0\u55356 \u56827 \u55356 \u56819 \cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-semibold mt-2"\cf6 \strokec6 >\cf0 \strokec5 25,450 VND\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-xs text-slate-500"\cf6 \strokec6 >\cf0 \strokec5 (V\'ed d\uc0\u7909 )\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 section\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 section\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "section-2"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-16"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 h2\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-3xl font-bold mb-2 text-center text-slate-800"\cf6 \strokec6 >\cf0 \strokec5 2. M\'f4 Ph\uc0\u7887 ng T\u432 \u417 ng T\'e1c\cf6 \strokec6 </\cf7 \strokec7 h2\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center text-lg mb-8 text-slate-600"\cf6 \strokec6 >\cf0 \strokec5 H\'e3y th\uc0\u7917  thay \u273 \u7893 i t\u7927  gi\'e1 \u273 \u7875  xem gi\'e1 c\u7911 a m\u7897 t m\'f3n h\'e0ng nh\u7853 p kh\u7849 u thay \u273 \u7893 i nh\u432  th\u7871  n\'e0o.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "grid md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-xl shadow-lg"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-6"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 label\cf0 \strokec5  \cf4 \strokec4 for\cf6 \strokec6 =\cf8 \strokec8 "usd-price"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "block font-medium mb-2"\cf6 \strokec6 >\cf0 \strokec5 Gi\'e1 s\uc0\u7843 n ph\u7849 m (USD)\cf6 \strokec6 </\cf7 \strokec7 label\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 input\cf0 \strokec5  \cf4 \strokec4 type\cf6 \strokec6 =\cf8 \strokec8 "number"\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "usd-price"\cf0 \strokec5  \cf4 \strokec4 value\cf6 \strokec6 =\cf8 \strokec8 "80"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 label\cf0 \strokec5  \cf4 \strokec4 for\cf6 \strokec6 =\cf8 \strokec8 "exchange-rate-slider"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "block font-medium mb-2"\cf6 \strokec6 >\cf0 \strokec5 T\uc0\u7927  gi\'e1 USD/VND: \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "rate-display"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold text-teal-600"\cf6 \strokec6 >\cf0 \strokec5 25,000\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 ></\cf7 \strokec7 label\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 input\cf0 \strokec5  \cf4 \strokec4 type\cf6 \strokec6 =\cf8 \strokec8 "range"\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "exchange-rate-slider"\cf0 \strokec5  \cf4 \strokec4 min\cf6 \strokec6 =\cf8 \strokec8 "23000"\cf0 \strokec5  \cf4 \strokec4 max\cf6 \strokec6 =\cf8 \strokec8 "27000"\cf0 \strokec5  \cf4 \strokec4 step\cf6 \strokec6 =\cf8 \strokec8 "50"\cf0 \strokec5  \cf4 \strokec4 value\cf6 \strokec6 =\cf8 \strokec8 "25000"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center bg-teal-50 p-8 rounded-xl"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-lg text-slate-600 mb-2"\cf6 \strokec6 >\cf0 \strokec5 Gi\'e1 quy \uc0\u273 \u7893 i sang VND\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "vnd-price"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-4xl font-bold text-teal-700"\cf6 \strokec6 >\cf0 \strokec5 2,000,000 VND\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 section\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 section\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "section-3"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-16"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 h2\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-3xl font-bold mb-2 text-center text-slate-800"\cf6 \strokec6 >\cf0 \strokec5 3. T\uc0\u7927  Gi\'e1 \u7842 nh H\u432 \u7903 ng T\u7899 i X\u259 ng D\u7847 u Nh\u432  Th\u7871  N\'e0o?\cf6 \strokec6 </\cf7 \strokec7 h2\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center text-lg mb-8 text-slate-600"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 Vi\uc0\u7879 t Nam nh\u7853 p kh\u7849 u m\u7897 t ph\u7847 n l\u7899 n d\u7847 u th\'f4 v\'e0 x\u259 ng th\'e0nh ph\u7849 m t\u7915  th\u7883  tr\u432 \u7901 ng th\u7871  gi\u7899 i. T\u7845 t c\u7843  c\'e1c giao d\u7883 ch n\'e0y \u273 \u7873 u \u273 \u432 \u7907 c thanh to\'e1n b\u7857 ng \u273 \u7891 ng \u272 \'f4 la M\u7929  (USD).\cb1 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "bg-white p-8 rounded-xl shadow-lg"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center font-semibold mb-6 text-lg"\cf6 \strokec6 >\cf0 \strokec5 Quy tr\'ecnh c\uc0\u417  b\u7843 n:\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "flex flex-col md:flex-row justify-around items-center text-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-6 md:mb-0 md:flow-arrow"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2"\cf6 \strokec6 >\cf0 \strokec5 \uc0\u55357 \u57058 \u65039 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 h3\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold"\cf6 \strokec6 >\cf0 \strokec5 Th\uc0\u7883  tr\u432 \u7901 ng Th\u7871  gi\u7899 i\cf6 \strokec6 </\cf7 \strokec7 h3\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-sm"\cf6 \strokec6 >\cf0 \strokec5 Gi\'e1 d\uc0\u7847 u \u273 \u432 \u7907 c ni\'eam y\u7871 t\cf6 \strokec6 <\cf7 \strokec7 br\cf6 \strokec6 >\cf0 \strokec5 v\'e0 giao d\uc0\u7883 ch b\u7857 ng \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold text-red-600"\cf6 \strokec6 >\cf0 \strokec5 USD\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 ></\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-6 md:mb-0 md:flow-arrow"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2"\cf6 \strokec6 >\cf0 \strokec5 \uc0\u55356 \u57314 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 h3\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold"\cf6 \strokec6 >\cf0 \strokec5 Doanh nghi\uc0\u7879 p Vi\u7879 t Nam\cf6 \strokec6 </\cf7 \strokec7 h3\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-sm"\cf6 \strokec6 >\cf0 \strokec5 Ph\uc0\u7843 i d\'f9ng VND mua USD\cf6 \strokec6 <\cf7 \strokec7 br\cf6 \strokec6 >\cf0 \strokec5 \uc0\u273 \u7875  thanh to\'e1n ti\u7873 n h\'e0ng\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2"\cf6 \strokec6 >\cf0 \strokec5 \uc0\u9981 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 h3\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold"\cf6 \strokec6 >\cf0 \strokec5 Ng\uc0\u432 \u7901 i ti\'eau d\'f9ng Vi\u7879 t Nam\cf6 \strokec6 </\cf7 \strokec7 h3\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-sm"\cf6 \strokec6 >\cf0 \strokec5 Mua x\uc0\u259 ng t\u7841 i c\'e2y x\u259 ng\cf6 \strokec6 <\cf7 \strokec7 br\cf6 \strokec6 >\cf0 \strokec5 b\uc0\u7857 ng \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold text-blue-600"\cf6 \strokec6 >\cf0 \strokec5 VND\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 ></\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mt-8 text-center text-slate-600 bg-slate-50 p-4 rounded-lg"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     Do \uc0\u273 \'f3, b\u7845 t k\u7923  s\u7921  thay \u273 \u7893 i n\'e0o c\u7911 a t\u7927  gi\'e1 USD/VND \u273 \u7873 u \u7843 nh h\u432 \u7903 ng tr\u7921 c ti\u7871 p \u273 \u7871 n \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold"\cf6 \strokec6 >\cf0 \strokec5 chi ph\'ed \uc0\u273 \u7847 u v\'e0o\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \strokec5  c\uc0\u7911 a c\'e1c doanh nghi\u7879 p x\u259 ng d\u7847 u, v\'e0 cu\u7889 i c\'f9ng l\'e0 \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold"\cf6 \strokec6 >\cf0 \strokec5 gi\'e1 b\'e1n l\uc0\u7867 \cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \strokec5  \uc0\u273 \u7871 n tay ng\u432 \u7901 i d\'e2n.\cb1 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 section\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cb1 \
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 section\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "section-4"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-16"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 h2\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-3xl font-bold mb-2 text-center text-slate-800"\cf6 \strokec6 >\cf0 \strokec5 4. Ph\'e2n T\'edch K\uc0\u7883 ch B\u7843 n T\'e1c \u272 \u7897 ng\cf6 \strokec6 </\cf7 \strokec7 h2\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center text-lg mb-8 text-slate-600"\cf6 \strokec6 >\cf0 \strokec5 Ch\uc0\u7885 n m\u7897 t k\u7883 ch b\u7843 n \u273 \u7875  xem t\u7927  gi\'e1 t\'e1c \u273 \u7897 ng \u273 \u7871 n chi ph\'ed nh\u7853 p kh\u7849 u m\u7897 t th\'f9ng d\u7847 u nh\u432  th\u7871  n\'e0o.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cb1 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "flex justify-center space-x-4 mb-8"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 button\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "btn-increase"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "px-6 py-2 border border-slate-300 rounded-full hover:bg-teal-600 hover:text-white transition duration-200 btn-active"\cf6 \strokec6 >\cf0 \strokec5 Khi T\uc0\u7927  Gi\'e1 T\u258 NG \u55357 \u56520 \cf6 \strokec6 </\cf7 \strokec7 button\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 button\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "btn-decrease"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "px-6 py-2 border border-slate-300 rounded-full hover:bg-teal-600 hover:text-white transition duration-200"\cf6 \strokec6 >\cf0 \strokec5 Khi T\uc0\u7927  Gi\'e1 GI\u7842 M \u55357 \u56521 \cf6 \strokec6 </\cf7 \strokec7 button\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "bg-white p-6 md:p-8 rounded-xl shadow-lg grid md:grid-cols-5 gap-8 items-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "md:col-span-2"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 h3\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "scenario-title"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-xl font-bold mb-4 text-teal-700"\cf6 \strokec6 >\cf0 \strokec5 K\uc0\u7883 ch b\u7843 n 1: T\u7927  gi\'e1 USD/VND t\u259 ng (VND m\u7845 t gi\'e1)\cf6 \strokec6 </\cf7 \strokec7 h3\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "scenario-text"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "space-y-4 text-slate-600"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \strokec5 Gi\uc0\u7843  s\u7917  t\u7927  gi\'e1 t\u259 ng t\u7915  \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-semibold"\cf6 \strokec6 >\cf0 \strokec5 25,000\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \strokec5  l\'ean \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-semibold"\cf6 \strokec6 >\cf0 \strokec5 26,000\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \strokec5  VND/USD.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \strokec5 Doanh nghi\uc0\u7879 p s\u7869  ph\u7843 i b\u7887  ra nhi\u7873 u ti\u7873 n Vi\u7879 t h\u417 n \u273 \u7875  mua c\'f9ng m\u7897 t l\u432 \u7907 ng USD. \u272 i\u7873 u n\'e0y l\'e0m \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold text-red-600"\cf6 \strokec6 >\cf0 \strokec5 t\uc0\u259 ng chi ph\'ed \u273 \u7847 u v\'e0o\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \strokec5  b\uc0\u7857 ng VND, d\'f9 gi\'e1 d\u7847 u th\u7871  gi\u7899 i kh\'f4ng \u273 \u7893 i.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "p-3 bg-red-50 text-red-800 rounded-lg"\cf6 \strokec6 >\cf0 \strokec5 \uc0\u10145 \u65039  \cf6 \strokec6 <\cf7 \strokec7 span\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "font-bold"\cf6 \strokec6 >\cf0 \strokec5 T\'e1c \uc0\u273 \u7897 ng ti\'eau c\u7921 c:\cf6 \strokec6 </\cf7 \strokec7 span\cf6 \strokec6 >\cf0 \strokec5  G\'e2y \'e1p l\uc0\u7921 c l\'e0m t\u259 ng gi\'e1 b\'e1n l\u7867  x\u259 ng d\u7847 u trong n\u432 \u7899 c \u273 \u7875  b\'f9 \u273 \u7855 p chi ph\'ed.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "md:col-span-3"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "chart-container"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \cf6 \strokec6 <\cf7 \strokec7 canvas\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "impactChart"\cf6 \strokec6 ></\cf7 \strokec7 canvas\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 section\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 section\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "section-5"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-16"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 h2\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-3xl font-bold mb-2 text-center text-slate-800"\cf6 \strokec6 >\cf0 \strokec5 5. H\uc0\u7887 i Chuy\'ean Gia Kinh T\u7871  AI\cf6 \strokec6 </\cf7 \strokec7 h2\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center text-lg mb-8 text-slate-600"\cf6 \strokec6 >\cf0 \strokec5 B\uc0\u7841 n c\'f3 th\u7855 c m\u7855 c v\u7873  kinh t\u7871 ? H\'e3y h\u7887 i chuy\'ean gia AI c\u7911 a ch\'fang t\'f4i \u273 \u7875  \u273 \u432 \u7907 c gi\u7843 i th\'edch \u273 \u417 n gi\u7843 n.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mb-4"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 textarea\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "ai-expert-question"\cf0 \strokec5  \cf4 \strokec4 rows\cf6 \strokec6 =\cf8 \strokec8 "3"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"\cf0 \strokec5  \cf4 \strokec4 placeholder\cf6 \strokec6 =\cf8 \strokec8 "V\'ed d\uc0\u7909 : L\u7841 m ph\'e1t l\'e0 g\'ec?"\cf6 \strokec6 ></\cf7 \strokec7 textarea\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 button\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "ask-expert-btn"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-700 transition duration-200 flex items-center justify-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     G\uc0\u7917 i c\'e2u h\u7887 i\cb1 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 button\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "expert-loader"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mt-6 hidden justify-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "loader"\cf6 \strokec6 ></\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "expert-answer"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-slate-700 leading-relaxed"\cf0 \strokec5  \cf4 \strokec4 style\cf6 \strokec6 =\cf8 \strokec8 "display: none;"\cf6 \strokec6 ></\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 section\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 section\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "section-6"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 h2\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-3xl font-bold mb-2 text-center text-slate-800"\cf6 \strokec6 >\cf0 \strokec5 6. Ph\'e2n T\'edch T\'e1c \uc0\u272 \u7897 ng T\u7915  Tin T\u7913 c\cf6 \strokec6 </\cf7 \strokec7 h2\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 p\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "text-center text-lg mb-8 text-slate-600"\cf6 \strokec6 >\cf0 \strokec5 Nh\uc0\u7853 p m\u7897 t ch\u7911  \u273 \u7873  tin t\u7913 c (v\'ed d\u7909 : "OPEC c\u7855 t gi\u7843 m s\u7843 n l\u432 \u7907 ng") \u273 \u7875  AI ph\'e2n t\'edch t\'e1c \u273 \u7897 ng ti\u7873 m t\'e0ng \u273 \u7871 n gi\'e1 x\u259 ng Vi\u7879 t Nam.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "flex flex-col sm:flex-row gap-4"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 input\cf0 \strokec5  \cf4 \strokec4 type\cf6 \strokec6 =\cf8 \strokec8 "text"\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "news-topic-input"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "flex-grow p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"\cf0 \strokec5  \cf4 \strokec4 placeholder\cf6 \strokec6 =\cf8 \strokec8 "Nh\uc0\u7853 p ch\u7911  \u273 \u7873  tin t\u7913 c \u7903  \u273 \'e2y..."\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 button\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "analyze-news-btn"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition duration-200 flex items-center justify-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                         \uc0\u10024  Ph\'e2n t\'edch\cb1 \
-\cb3                     \cf6 \strokec6 </\cf7 \strokec7 button\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                  \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "news-loader"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mt-6 hidden justify-center"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                     \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "loader"\cf6 \strokec6 ></\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3                 \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 id\cf6 \strokec6 =\cf8 \strokec8 "news-analysis"\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-slate-700 leading-relaxed"\cf0 \strokec5  \cf4 \strokec4 style\cf6 \strokec6 =\cf8 \strokec8 "display: none;"\cf6 \strokec6 ></\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 section\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3     \cf6 \strokec6 </\cf7 \strokec7 main\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 footer\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "bg-slate-800 text-white mt-16"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 <\cf7 \strokec7 div\cf0 \strokec5  \cf4 \strokec4 class\cf6 \strokec6 =\cf8 \strokec8 "container mx-auto px-4 py-6 text-center text-slate-400"\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3             \cf6 \strokec6 <\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \strokec5 &copy; 2025 - Ph\'e2n t\'edch b\uc0\u7903 i AI. Th\'f4ng tin ch\u7881  mang t\'ednh ch\u7845 t tham kh\u7843 o v\'e0 minh h\u7885 a.\cf6 \strokec6 </\cf7 \strokec7 p\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         \cf6 \strokec6 </\cf7 \strokec7 div\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3     \cf6 \strokec6 </\cf7 \strokec7 footer\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\
-\cb3     \cf6 \strokec6 <\cf7 \strokec7 script\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cb3         document.addEventListener(\cf10 \strokec10 'DOMContentLoaded'\cf0 \strokec5 , () => \{\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  usdPriceInput = document.getElementById(\cf10 \strokec10 'usd-price'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  rateSlider = document.getElementById(\cf10 \strokec10 'exchange-rate-slider'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  rateDisplay = document.getElementById(\cf10 \strokec10 'rate-display'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  vndPriceDisplay = document.getElementById(\cf10 \strokec10 'vnd-price'\cf0 \strokec5 );\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  formatter = \cf13 \strokec13 new\cf0 \strokec5  \cf14 \strokec14 Intl\cf0 \strokec5 .\cf14 \strokec14 NumberFormat\cf0 \strokec5 (\cf10 \strokec10 'vi-VN'\cf0 \strokec5 , \{\cb1 \
-\cb3                 style: \cf10 \strokec10 'currency'\cf0 \strokec5 ,\cb1 \
-\cb3                 currency: \cf10 \strokec10 'VND'\cf0 \strokec5 ,\cb1 \
-\cb3                 minimumFractionDigits: \cf15 \strokec15 0\cf0 \cb1 \strokec5 \
-\cb3             \});\cb1 \
-\
-\cb3             \cf13 \strokec13 function\cf0 \strokec5  updateSimulator() \{\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  usdPrice = parseFloat(usdPriceInput.value) || \cf15 \strokec15 0\cf0 \strokec5 ;\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  rate = parseFloat(rateSlider.value);\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  vndPrice = usdPrice * rate;\cb1 \
-\
-\cb3                 rateDisplay.textContent = \cf13 \strokec13 new\cf0 \strokec5  \cf14 \strokec14 Intl\cf0 \strokec5 .\cf14 \strokec14 NumberFormat\cf0 \strokec5 (\cf10 \strokec10 'vi-VN'\cf0 \strokec5 ).format(rate);\cb1 \
-\cb3                 vndPriceDisplay.textContent = formatter.format(vndPrice);\cb1 \
-\cb3             \}\cb1 \
-\
-\cb3             usdPriceInput.addEventListener(\cf10 \strokec10 'input'\cf0 \strokec5 , updateSimulator);\cb1 \
-\cb3             rateSlider.addEventListener(\cf10 \strokec10 'input'\cf0 \strokec5 , updateSimulator);\cb1 \
-\cb3             \cb1 \
-\cb3             updateSimulator();\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  scenarioTitle = document.getElementById(\cf10 \strokec10 'scenario-title'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  scenarioText = document.getElementById(\cf10 \strokec10 'scenario-text'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  btnIncrease = document.getElementById(\cf10 \strokec10 'btn-increase'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  btnDecrease = document.getElementById(\cf10 \strokec10 'btn-decrease'\cf0 \strokec5 );\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  textIncrease = \cf10 \strokec10 `\cf0 \cb1 \strokec5 \
-\pard\pardeftab720\partightenfactor0
-\cf10 \cb3 \strokec10                 <p>Gi\uc0\u7843  s\u7917  t\u7927  gi\'e1 t\u259 ng t\u7915  <span class="font-semibold">25,000</span> l\'ean <span class="font-semibold">26,000</span> VND/USD.</p>\cf0 \cb1 \strokec5 \
-\cf10 \cb3 \strokec10                 <p>Doanh nghi\uc0\u7879 p s\u7869  ph\u7843 i b\u7887  ra nhi\u7873 u ti\u7873 n Vi\u7879 t h\u417 n \u273 \u7875  mua c\'f9ng m\u7897 t l\u432 \u7907 ng USD. \u272 i\u7873 u n\'e0y l\'e0m <span class="font-bold text-red-600">t\u259 ng chi ph\'ed \u273 \u7847 u v\'e0o</span> b\u7857 ng VND, d\'f9 gi\'e1 d\u7847 u th\u7871  gi\u7899 i kh\'f4ng \u273 \u7893 i.</p>\cf0 \cb1 \strokec5 \
-\cf10 \cb3 \strokec10                 <p class="p-3 bg-red-50 text-red-800 rounded-lg">\uc0\u10145 \u65039  <span class="font-bold">T\'e1c \u273 \u7897 ng ti\'eau c\u7921 c:</span> G\'e2y \'e1p l\u7921 c l\'e0m t\u259 ng gi\'e1 b\'e1n l\u7867  x\u259 ng d\u7847 u trong n\u432 \u7899 c \u273 \u7875  b\'f9 \u273 \u7855 p chi ph\'ed.</p>\cf0 \cb1 \strokec5 \
-\cf10 \cb3 \strokec10             `\cf0 \strokec5 ;\cb1 \
-\pard\pardeftab720\partightenfactor0
-\cf0 \cb3             \cf13 \strokec13 const\cf0 \strokec5  textDecrease = \cf10 \strokec10 `\cf0 \cb1 \strokec5 \
-\pard\pardeftab720\partightenfactor0
-\cf10 \cb3 \strokec10                 <p>Gi\uc0\u7843  s\u7917  t\u7927  gi\'e1 gi\u7843 m t\u7915  <span class="font-semibold">25,000</span> xu\u7889 ng <span class="font-semibold">24,000</span> VND/USD.</p>\cf0 \cb1 \strokec5 \
-\cf10 \cb3 \strokec10                 <p>Doanh nghi\uc0\u7879 p s\u7869  ch\u7881  c\u7847 n b\u7887  ra \'edt ti\u7873 n Vi\u7879 t h\u417 n \u273 \u7875  mua c\'f9ng m\u7897 t l\u432 \u7907 ng USD. \u272 i\u7873 u n\'e0y l\'e0m <span class="font-bold text-green-600">gi\u7843 m chi ph\'ed \u273 \u7847 u v\'e0o</span> b\u7857 ng VND.</p>\cf0 \cb1 \strokec5 \
-\cf10 \cb3 \strokec10                 <p class="p-3 bg-green-50 text-green-800 rounded-lg">\uc0\u10145 \u65039  <span class="font-bold">T\'e1c \u273 \u7897 ng t\'edch c\u7921 c:</span> Gi\u7843 m \'e1p l\u7921 c l\'ean gi\'e1 b\'e1n l\u7867 , c\'f3 th\u7875  gi\'fap b\'ecnh \u7893 n ho\u7863 c gi\u7843 m gi\'e1 x\u259 ng d\u7847 u.</p>\cf0 \cb1 \strokec5 \
-\cf10 \cb3 \strokec10             `\cf0 \strokec5 ;\cb1 \
-\
-\pard\pardeftab720\partightenfactor0
-\cf0 \cb3             \cf13 \strokec13 const\cf0 \strokec5  basePriceUSD = \cf15 \strokec15 80\cf0 \strokec5 ;\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  baseRate = \cf15 \strokec15 25000\cf0 \strokec5 ;\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  increasedRate = \cf15 \strokec15 26000\cf0 \strokec5 ;\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  decreasedRate = \cf15 \strokec15 24000\cf0 \strokec5 ;\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  baseCostVND = basePriceUSD * baseRate;\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  increasedCostVND = basePriceUSD * increasedRate;\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  decreasedCostVND = basePriceUSD * decreasedRate;\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  ctx = document.getElementById(\cf10 \strokec10 'impactChart'\cf0 \strokec5 ).getContext(\cf10 \strokec10 '2d'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  impactChart = \cf13 \strokec13 new\cf0 \strokec5  \cf14 \strokec14 Chart\cf0 \strokec5 (ctx, \{\cb1 \
-\cb3                 type: \cf10 \strokec10 'bar'\cf0 \strokec5 ,\cb1 \
-\cb3                 data: \{\cb1 \
-\cb3                     labels: [\cf10 \strokec10 'Gi\'e1 G\uc0\u7889 c (VND)'\cf0 \strokec5 , \cf10 \strokec10 'Gi\'e1 Sau Thay \uc0\u272 \u7893 i (VND)'\cf0 \strokec5 ],\cb1 \
-\cb3                     datasets: [\{\cb1 \
-\cb3                         label: \cf10 \strokec10 'Chi ph\'ed nh\uc0\u7853 p kh\u7849 u 1 th\'f9ng d\u7847 u (VND)'\cf0 \strokec5 ,\cb1 \
-\cb3                         data: [baseCostVND, increasedCostVND],\cb1 \
-\cb3                         backgroundColor: [\cf10 \strokec10 'rgba(59, 130, 246, 0.6)'\cf0 \strokec5 , \cf10 \strokec10 'rgba(239, 68, 68, 0.6)'\cf0 \strokec5 ],\cb1 \
-\cb3                         borderColor: [\cf10 \strokec10 'rgba(59, 130, 246, 1)'\cf0 \strokec5 , \cf10 \strokec10 'rgba(239, 68, 68, 1)'\cf0 \strokec5 ],\cb1 \
-\cb3                         borderWidth: \cf15 \strokec15 1\cf0 \cb1 \strokec5 \
-\cb3                     \}]\cb1 \
-\cb3                 \},\cb1 \
-\cb3                 options: \{\cb1 \
-\cb3                     responsive: \cf13 \strokec13 true\cf0 \strokec5 ,\cb1 \
-\cb3                     maintainAspectRatio: \cf13 \strokec13 false\cf0 \strokec5 ,\cb1 \
-\cb3                     scales: \{ y: \{ beginAtZero: \cf13 \strokec13 true\cf0 \strokec5 , ticks: \{ callback: (v) => \cf13 \strokec13 new\cf0 \strokec5  \cf14 \strokec14 Intl\cf0 \strokec5 .\cf14 \strokec14 NumberFormat\cf0 \strokec5 (\cf10 \strokec10 'vi-VN'\cf0 \strokec5 ).format(v) + \cf10 \strokec10 ' \uc0\u8363 '\cf0 \strokec5  \} \} \},\cb1 \
-\cb3                     plugins: \{ legend: \{ display: \cf13 \strokec13 false\cf0 \strokec5  \}, tooltip: \{ callbacks: \{ label: (c) => \cf10 \strokec10 `\cf0 \strokec5 $\{c.dataset.label || \cf10 \strokec10 ''\cf0 \strokec5 \}\cf10 \strokec10 : \cf0 \strokec5 $\{formatter.format(c.parsed.y)\}\cf10 \strokec10 `\cf0 \strokec5  \} \} \}\cb1 \
-\cb3                 \}\cb1 \
-\cb3             \});\cb1 \
-\
-\cb3             \cf13 \strokec13 function\cf0 \strokec5  updateScenario(type) \{\cb1 \
-\cb3                 \cf13 \strokec13 if\cf0 \strokec5  (type === \cf10 \strokec10 'increase'\cf0 \strokec5 ) \{\cb1 \
-\cb3                     btnIncrease.classList.add(\cf10 \strokec10 'btn-active'\cf0 \strokec5 );\cb1 \
-\cb3                     btnDecrease.classList.remove(\cf10 \strokec10 'btn-active'\cf0 \strokec5 );\cb1 \
-\cb3                     scenarioTitle.textContent = \cf10 \strokec10 'K\uc0\u7883 ch b\u7843 n 1: T\u7927  gi\'e1 USD/VND t\u259 ng (VND m\u7845 t gi\'e1)'\cf0 \strokec5 ;\cb1 \
-\cb3                     scenarioText.innerHTML = textIncrease;\cb1 \
-\cb3                     impactChart.data.datasets[\cf15 \strokec15 0\cf0 \strokec5 ].data = [baseCostVND, increasedCostVND];\cb1 \
-\cb3                     impactChart.data.datasets[\cf15 \strokec15 0\cf0 \strokec5 ].backgroundColor = [\cf10 \strokec10 'rgba(59, 130, 246, 0.6)'\cf0 \strokec5 , \cf10 \strokec10 'rgba(239, 68, 68, 0.6)'\cf0 \strokec5 ];\cb1 \
-\cb3                     impactChart.data.datasets[\cf15 \strokec15 0\cf0 \strokec5 ].borderColor = [\cf10 \strokec10 'rgba(59, 130, 246, 1)'\cf0 \strokec5 , \cf10 \strokec10 'rgba(239, 68, 68, 1)'\cf0 \strokec5 ];\cb1 \
-\
-\cb3                 \} \cf13 \strokec13 else\cf0 \strokec5  \{\cb1 \
-\cb3                     btnDecrease.classList.add(\cf10 \strokec10 'btn-active'\cf0 \strokec5 );\cb1 \
-\cb3                     btnIncrease.classList.remove(\cf10 \strokec10 'btn-active'\cf0 \strokec5 );\cb1 \
-\cb3                     scenarioTitle.textContent = \cf10 \strokec10 'K\uc0\u7883 ch b\u7843 n 2: T\u7927  gi\'e1 USD/VND gi\u7843 m (VND l\'ean gi\'e1)'\cf0 \strokec5 ;\cb1 \
-\cb3                     scenarioText.innerHTML = textDecrease;\cb1 \
-\cb3                     impactChart.data.datasets[\cf15 \strokec15 0\cf0 \strokec5 ].data = [baseCostVND, decreasedCostVND];\cb1 \
-\cb3                     impactChart.data.datasets[\cf15 \strokec15 0\cf0 \strokec5 ].backgroundColor = [\cf10 \strokec10 'rgba(59, 130, 246, 0.6)'\cf0 \strokec5 , \cf10 \strokec10 'rgba(22, 163, 74, 0.6)'\cf0 \strokec5 ];\cb1 \
-\cb3                     impactChart.data.datasets[\cf15 \strokec15 0\cf0 \strokec5 ].borderColor = [\cf10 \strokec10 'rgba(59, 130, 246, 1)'\cf0 \strokec5 , \cf10 \strokec10 'rgba(22, 163, 74, 1)'\cf0 \strokec5 ];\cb1 \
-\cb3                 \}\cb1 \
-\cb3                 impactChart.update();\cb1 \
-\cb3             \}\cb1 \
-\
-\cb3             btnIncrease.addEventListener(\cf10 \strokec10 'click'\cf0 \strokec5 , () => updateScenario(\cf10 \strokec10 'increase'\cf0 \strokec5 ));\cb1 \
-\cb3             btnDecrease.addEventListener(\cf10 \strokec10 'click'\cf0 \strokec5 , () => updateScenario(\cf10 \strokec10 'decrease'\cf0 \strokec5 ));\cb1 \
-\cb3             \cb1 \
-\cb3             document.querySelectorAll(\cf10 \strokec10 'a[href^="#"]'\cf0 \strokec5 ).forEach(anchor => \{\cb1 \
-\cb3                 anchor.addEventListener(\cf10 \strokec10 'click'\cf0 \strokec5 , \cf13 \strokec13 function\cf0 \strokec5  (e) \{\cb1 \
-\cb3                     e.preventDefault();\cb1 \
-\cb3                     document.querySelector(\cf13 \strokec13 this\cf0 \strokec5 .getAttribute(\cf10 \strokec10 'href'\cf0 \strokec5 )).scrollIntoView(\{ behavior: \cf10 \strokec10 'smooth'\cf0 \strokec5  \});\cb1 \
-\cb3                 \});\cb1 \
-\cb3             \});\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  apiKey = \cf10 \strokec10 ""\cf0 \strokec5 ; \cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  apiUrl = \cf10 \strokec10 `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=\cf0 \strokec5 $\{apiKey\}\cf10 \strokec10 `\cf0 \strokec5 ;\cb1 \
-\
-\cb3             \cf13 \strokec13 function\cf0 \strokec5  formatResponseText(text) \{\cb1 \
-\cb3                 \cf13 \strokec13 return\cf0 \strokec5  text.replace(\cf7 \strokec7 /\\*\\*(.*?)\\*\\*/\cf13 \strokec13 g\cf0 \strokec5 , \cf10 \strokec10 '<strong>$1</strong>'\cf0 \strokec5 ).replace(\cf7 \strokec7 /\\*(.*?)\\*/\cf13 \strokec13 g\cf0 \strokec5 , \cf10 \strokec10 '<em>$1</em>'\cf0 \strokec5 ).replace(\cf7 \strokec7 /\\n/\cf13 \strokec13 g\cf0 \strokec5 , \cf10 \strokec10 '<br>'\cf0 \strokec5 );\cb1 \
-\cb3             \}\cb1 \
-\
-\cb3             \cf13 \strokec13 async\cf0 \strokec5  \cf13 \strokec13 function\cf0 \strokec5  callGeminiAPI(prompt, systemInstruction = \cf13 \strokec13 null\cf0 \strokec5 , useSearch = \cf13 \strokec13 false\cf0 \strokec5 , retries = \cf15 \strokec15 3\cf0 \strokec5 , delay = \cf15 \strokec15 1000\cf0 \strokec5 ) \{\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  payload = \{ contents: [\{ parts: [\{ text: prompt \}] \}] \};\cb1 \
-\cb3                 \cf13 \strokec13 if\cf0 \strokec5  (useSearch) payload.tools = [\{ \cf10 \strokec10 "google_search"\cf0 \strokec5 : \{\} \}];\cb1 \
-\cb3                 \cf13 \strokec13 if\cf0 \strokec5  (systemInstruction) payload.systemInstruction = \{ parts: [\{ text: systemInstruction \}] \};\cb1 \
-\
-\cb3                 \cf13 \strokec13 for\cf0 \strokec5  (\cf13 \strokec13 let\cf0 \strokec5  i = \cf15 \strokec15 0\cf0 \strokec5 ; i < retries; i++) \{\cb1 \
-\cb3                     \cf13 \strokec13 try\cf0 \strokec5  \{\cb1 \
-\cb3                         \cf13 \strokec13 const\cf0 \strokec5  response = \cf13 \strokec13 await\cf0 \strokec5  fetch(apiUrl, \{\cb1 \
-\cb3                             method: \cf10 \strokec10 'POST'\cf0 \strokec5 ,\cb1 \
-\cb3                             headers: \{ \cf10 \strokec10 'Content-Type'\cf0 \strokec5 : \cf10 \strokec10 'application/json'\cf0 \strokec5  \},\cb1 \
-\cb3                             body: \cf14 \strokec14 JSON\cf0 \strokec5 .stringify(payload)\cb1 \
-\cb3                         \});\cb1 \
-\cb3                         \cf13 \strokec13 if\cf0 \strokec5  (!response.ok) \cf13 \strokec13 throw\cf0 \strokec5  \cf13 \strokec13 new\cf0 \strokec5  \cf14 \strokec14 Error\cf0 \strokec5 (\cf10 \strokec10 `HTTP error! status: \cf0 \strokec5 $\{response.status\}\cf10 \strokec10 `\cf0 \strokec5 );\cb1 \
-\cb3                         \cf13 \strokec13 const\cf0 \strokec5  result = \cf13 \strokec13 await\cf0 \strokec5  response.json();\cb1 \
-\cb3                         \cf13 \strokec13 const\cf0 \strokec5  candidate = result.candidates?.[\cf15 \strokec15 0\cf0 \strokec5 ];\cb1 \
-\cb3                         \cf13 \strokec13 if\cf0 \strokec5  (candidate && candidate.content?.parts?.[\cf15 \strokec15 0\cf0 \strokec5 ]?.text) \{\cb1 \
-\cb3                             \cf13 \strokec13 return\cf0 \strokec5  candidate.content.parts[\cf15 \strokec15 0\cf0 \strokec5 ].text;\cb1 \
-\cb3                         \} \cf13 \strokec13 else\cf0 \strokec5  \{\cb1 \
-\cb3                             \cf13 \strokec13 throw\cf0 \strokec5  \cf13 \strokec13 new\cf0 \strokec5  \cf14 \strokec14 Error\cf0 \strokec5 (\cf10 \strokec10 "Invalid response structure from API."\cf0 \strokec5 );\cb1 \
-\cb3                         \}\cb1 \
-\cb3                     \} \cf13 \strokec13 catch\cf0 \strokec5  (error) \{\cb1 \
-\cb3                         console.error(\cf10 \strokec10 `Attempt \cf0 \strokec5 $\{i + \cf15 \strokec15 1\cf0 \strokec5 \}\cf10 \strokec10  failed:`\cf0 \strokec5 , error);\cb1 \
-\cb3                         \cf13 \strokec13 if\cf0 \strokec5  (i === retries - \cf15 \strokec15 1\cf0 \strokec5 ) \cf13 \strokec13 return\cf0 \strokec5  \cf10 \strokec10 "\uc0\u272 \'e3 x\u7843 y ra l\u7895 i khi k\u7871 t n\u7889 i \u273 \u7871 n AI. Vui l\'f2ng th\u7917  l\u7841 i sau."\cf0 \strokec5 ;\cb1 \
-\cb3                         \cf13 \strokec13 await\cf0 \strokec5  \cf13 \strokec13 new\cf0 \strokec5  \cf14 \strokec14 Promise\cf0 \strokec5 (res => setTimeout(res, delay));\cb1 \
-\cb3                         delay *= \cf15 \strokec15 2\cf0 \strokec5 ;\cb1 \
-\cb3                     \}\cb1 \
-\cb3                 \}\cb1 \
-\cb3             \}\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  askExpertBtn = document.getElementById(\cf10 \strokec10 'ask-expert-btn'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  expertQuestionInput = document.getElementById(\cf10 \strokec10 'ai-expert-question'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  expertAnswerDiv = document.getElementById(\cf10 \strokec10 'expert-answer'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  expertLoader = document.getElementById(\cf10 \strokec10 'expert-loader'\cf0 \strokec5 );\cb1 \
-\cb3             \cb1 \
-\cb3             askExpertBtn.addEventListener(\cf10 \strokec10 'click'\cf0 \strokec5 , \cf13 \strokec13 async\cf0 \strokec5  () => \{\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  question = expertQuestionInput.value.trim();\cb1 \
-\cb3                 \cf13 \strokec13 if\cf0 \strokec5  (!question) \cf13 \strokec13 return\cf0 \strokec5 ;\cb1 \
-\
-\cb3                 expertAnswerDiv.style.display = \cf10 \strokec10 'none'\cf0 \strokec5 ;\cb1 \
-\cb3                 expertLoader.style.display = \cf10 \strokec10 'flex'\cf0 \strokec5 ;\cb1 \
-\cb3                 askExpertBtn.disabled = \cf13 \strokec13 true\cf0 \strokec5 ;\cb1 \
-\
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  systemInstruction = \cf10 \strokec10 "B\uc0\u7841 n l\'e0 m\u7897 t chuy\'ean gia kinh t\u7871  th\'e2n thi\u7879 n. H\'e3y tr\u7843  l\u7901 i c\'e1c c\'e2u h\u7887 i v\u7873  kinh t\u7871 , t\'e0i ch\'ednh, v\'e0 c\'e1c ch\u7911  \u273 \u7873  li\'ean quan m\u7897 t c\'e1ch \u273 \u417 n gi\u7843 n, r\'f5 r\'e0ng v\'e0 d\u7877  hi\u7875 u cho ng\u432 \u7901 i kh\'f4ng c\'f3 chuy\'ean m\'f4n. S\u7917  d\u7909 ng v\'ed d\u7909  t\u7915  Vi\u7879 t Nam khi ph\'f9 h\u7907 p."\cf0 \strokec5 ;\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  response = \cf13 \strokec13 await\cf0 \strokec5  callGeminiAPI(question, systemInstruction, \cf13 \strokec13 false\cf0 \strokec5 );\cb1 \
-\
-\cb3                 expertAnswerDiv.innerHTML = formatResponseText(response);\cb1 \
-\cb3                 expertLoader.style.display = \cf10 \strokec10 'none'\cf0 \strokec5 ;\cb1 \
-\cb3                 expertAnswerDiv.style.display = \cf10 \strokec10 'block'\cf0 \strokec5 ;\cb1 \
-\cb3                 askExpertBtn.disabled = \cf13 \strokec13 false\cf0 \strokec5 ;\cb1 \
-\cb3             \});\cb1 \
-\
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  analyzeNewsBtn = document.getElementById(\cf10 \strokec10 'analyze-news-btn'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  newsTopicInput = document.getElementById(\cf10 \strokec10 'news-topic-input'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  newsAnalysisDiv = document.getElementById(\cf10 \strokec10 'news-analysis'\cf0 \strokec5 );\cb1 \
-\cb3             \cf13 \strokec13 const\cf0 \strokec5  newsLoader = document.getElementById(\cf10 \strokec10 'news-loader'\cf0 \strokec5 );\cb1 \
-\
-\cb3             analyzeNewsBtn.addEventListener(\cf10 \strokec10 'click'\cf0 \strokec5 , \cf13 \strokec13 async\cf0 \strokec5  () => \{\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  topic = newsTopicInput.value.trim();\cb1 \
-\cb3                 \cf13 \strokec13 if\cf0 \strokec5  (!topic) \cf13 \strokec13 return\cf0 \strokec5 ;\cb1 \
-\
-\cb3                 newsAnalysisDiv.style.display = \cf10 \strokec10 'none'\cf0 \strokec5 ;\cb1 \
-\cb3                 newsLoader.style.display = \cf10 \strokec10 'flex'\cf0 \strokec5 ;\cb1 \
-\cb3                 analyzeNewsBtn.disabled = \cf13 \strokec13 true\cf0 \strokec5 ;\cb1 \
-\
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  prompt = \cf10 \strokec10 `D\uc0\u7921 a tr\'ean nh\u7919 ng th\'f4ng tin m\u7899 i nh\u7845 t t\u7915  t\'ecm ki\u7871 m tr\'ean web, h\'e3y ph\'e2n t\'edch ng\u7855 n g\u7885 n nh\u7919 ng t\'e1c \u273 \u7897 ng c\'f3 th\u7875  c\'f3 c\u7911 a ch\u7911  \u273 \u7873  sau \u273 \'e2y \u273 \u7889 i v\u7899 i gi\'e1 x\u259 ng d\u7847 u t\u7841 i Vi\u7879 t Nam: "\cf0 \strokec5 $\{topic\}\cf10 \strokec10 ". Tr\'ecnh b\'e0y c\'e1c \uc0\u273 i\u7875 m ch\'ednh m\u7897 t c\'e1ch r\'f5 r\'e0ng v\'e0 s\'fac t\'edch.`\cf0 \strokec5 ;\cb1 \
-\cb3                 \cf13 \strokec13 const\cf0 \strokec5  response = \cf13 \strokec13 await\cf0 \strokec5  callGeminiAPI(prompt, \cf13 \strokec13 null\cf0 \strokec5 , \cf13 \strokec13 true\cf0 \strokec5 );\cb1 \
-\
-\cb3                 newsAnalysisDiv.innerHTML = formatResponseText(response);\cb1 \
-\cb3                 newsLoader.style.display = \cf10 \strokec10 'none'\cf0 \strokec5 ;\cb1 \
-\cb3                 newsAnalysisDiv.style.display = \cf10 \strokec10 'block'\cf0 \strokec5 ;\cb1 \
-\cb3                 analyzeNewsBtn.disabled = \cf13 \strokec13 false\cf0 \strokec5 ;\cb1 \
-\cb3             \});\cb1 \
-\cb3         \});\cb1 \
-\cb3     \cf6 \strokec6 </\cf7 \strokec7 script\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\pard\pardeftab720\partightenfactor0
-\cf6 \cb3 \strokec6 </\cf7 \strokec7 body\cf6 \strokec6 >\cf0 \cb1 \strokec5 \
-\cf6 \cb3 \strokec6 </\cf7 \strokec7 html\cf6 \strokec6 >}
+    <header class="bg-white shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl md:text-2xl font-bold text-teal-700">Tỷ Giá & Ngành Xăng Dầu</h1>
+            <nav class="hidden md:flex space-x-6 text-slate-600">
+                <a href="#section-1" class="hover:text-teal-600">Tỷ giá là gì?</a>
+                <a href="#section-2" class="hover:text-teal-600">Mô phỏng</a>
+                <a href="#section-3" class="hover:text-teal-600">Tác động</a>
+                <a href="#section-5" class="hover:text-teal-600">Phân tích AI</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <section id="section-1" class="mb-16 text-center">
+            <h2 class="text-3xl font-bold mb-4 text-slate-800">1. Tỷ Giá Hối Đoái Là Gì?</h2>
+            <p class="max-w-3xl mx-auto text-lg mb-8 text-slate-600">
+                Hiểu một cách đơn giản, tỷ giá hối đoái là giá của một đồng tiền này khi được quy đổi sang một đồng tiền khác. Nó cho biết bạn cần bao nhiêu đơn vị tiền tệ của quốc gia B để mua một đơn vị tiền tệ của quốc gia A.
+            </p>
+            <div class="flex justify-center items-center space-x-4 md:space-x-8 p-6 bg-white rounded-xl shadow-lg max-w-xl mx-auto">
+                <div class="text-center">
+                    <span class="text-5xl">🇺🇸</span>
+                    <p class="font-semibold mt-2">1 USD</p>
+                </div>
+                <div class="text-5xl font-light text-slate-400">≈</div>
+                <div class="text-center">
+                    <span class="text-5xl">🇻🇳</span>
+                    <p class="font-semibold mt-2">25,450 VND</p>
+                    <p class="text-xs text-slate-500">(Ví dụ)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-2" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">2. Mô Phỏng Tương Tác</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Hãy thử thay đổi tỷ giá để xem giá của một món hàng nhập khẩu thay đổi như thế nào.</p>
+            <div class="grid md:grid-cols-2 gap-8 items-center bg-white p-8 rounded-xl shadow-lg">
+                <div>
+                    <div class="mb-6">
+                        <label for="usd-price" class="block font-medium mb-2">Giá sản phẩm (USD)</label>
+                        <input type="number" id="usd-price" value="80" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none">
+                    </div>
+                    <div>
+                        <label for="exchange-rate-slider" class="block font-medium mb-2">Tỷ giá USD/VND: <span id="rate-display" class="font-bold text-teal-600">25,000</span></label>
+                        <input type="range" id="exchange-rate-slider" min="23000" max="27000" step="50" value="25000" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
+                    </div>
+                </div>
+                <div class="text-center bg-teal-50 p-8 rounded-xl">
+                    <p class="text-lg text-slate-600 mb-2">Giá quy đổi sang VND</p>
+                    <p id="vnd-price" class="text-4xl font-bold text-teal-700">2,000,000 VND</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-3" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">3. Tỷ Giá Ảnh Hưởng Tới Xăng Dầu Như Thế Nào?</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">
+                Việt Nam nhập khẩu một phần lớn dầu thô và xăng thành phẩm từ thị trường thế giới. Tất cả các giao dịch này đều được thanh toán bằng đồng Đô la Mỹ (USD).
+            </p>
+            <div class="bg-white p-8 rounded-xl shadow-lg">
+                <p class="text-center font-semibold mb-6 text-lg">Quy trình cơ bản:</p>
+                <div class="flex flex-col md:flex-row justify-around items-center text-center">
+                    <div class="mb-6 md:mb-0 md:flow-arrow">
+                        <div class="w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2">🛢️</div>
+                        <h3 class="font-bold">Thị trường Thế giới</h3>
+                        <p class="text-sm">Giá dầu được niêm yết<br>và giao dịch bằng <span class="font-bold text-red-600">USD</span></p>
+                    </div>
+                    <div class="mb-6 md:mb-0 md:flow-arrow">
+                        <div class="w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2">🏢</div>
+                        <h3 class="font-bold">Doanh nghiệp Việt Nam</h3>
+                        <p class="text-sm">Phải dùng VND mua USD<br>để thanh toán tiền hàng</p>
+                    </div>
+                    <div>
+                        <div class="w-24 h-24 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-2">⛽</div>
+                        <h3 class="font-bold">Người tiêu dùng Việt Nam</h3>
+                        <p class="text-sm">Mua xăng tại cây xăng<br>bằng <span class="font-bold text-blue-600">VND</span></p>
+                    </div>
+                </div>
+                <p class="mt-8 text-center text-slate-600 bg-slate-50 p-4 rounded-lg">
+                    Do đó, bất kỳ sự thay đổi nào của tỷ giá USD/VND đều ảnh hưởng trực tiếp đến <span class="font-bold">chi phí đầu vào</span> của các doanh nghiệp xăng dầu, và cuối cùng là <span class="font-bold">giá bán lẻ</span> đến tay người dân.
+                </p>
+            </div>
+        </section>
+        
+        <section id="section-4" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">4. Phân Tích Kịch Bản Tác Động</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Chọn một kịch bản để xem tỷ giá tác động đến chi phí nhập khẩu một thùng dầu như thế nào.</p>
+            
+            <div class="flex justify-center space-x-4 mb-8">
+                <button id="btn-increase" class="px-6 py-2 border border-slate-300 rounded-full hover:bg-teal-600 hover:text-white transition duration-200 btn-active">Khi Tỷ Giá TĂNG 📈</button>
+                <button id="btn-decrease" class="px-6 py-2 border border-slate-300 rounded-full hover:bg-teal-600 hover:text-white transition duration-200">Khi Tỷ Giá GIẢM 📉</button>
+            </div>
+
+            <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg grid md:grid-cols-5 gap-8 items-center">
+                <div class="md:col-span-2">
+                    <h3 id="scenario-title" class="text-xl font-bold mb-4 text-teal-700">Kịch bản 1: Tỷ giá USD/VND tăng (VND mất giá)</h3>
+                    <div id="scenario-text" class="space-y-4 text-slate-600">
+                        <p>Giả sử tỷ giá tăng từ <span class="font-semibold">25,000</span> lên <span class="font-semibold">26,000</span> VND/USD.</p>
+                        <p>Doanh nghiệp sẽ phải bỏ ra nhiều tiền Việt hơn để mua cùng một lượng USD. Điều này làm <span class="font-bold text-red-600">tăng chi phí đầu vào</span> bằng VND, dù giá dầu thế giới không đổi.</p>
+                        <p class="p-3 bg-red-50 text-red-800 rounded-lg">➡️ <span class="font-bold">Tác động tiêu cực:</span> Gây áp lực làm tăng giá bán lẻ xăng dầu trong nước để bù đắp chi phí.</p>
+                    </div>
+                </div>
+                <div class="md:col-span-3">
+                    <div class="chart-container">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="section-5" class="mb-16">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">5. Hỏi Chuyên Gia Kinh Tế AI</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Bạn có thắc mắc về kinh tế? Hãy hỏi chuyên gia AI của chúng tôi để được giải thích đơn giản.</p>
+            <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                <div class="mb-4">
+                    <textarea id="ai-expert-question" rows="3" class="w-full p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none" placeholder="Ví dụ: Lạm phát là gì?"></textarea>
+                </div>
+                <button id="ask-expert-btn" class="w-full bg-teal-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-700 transition duration-200 flex items-center justify-center">
+                    Gửi câu hỏi
+                </button>
+                <div id="expert-loader" class="mt-6 hidden justify-center">
+                    <div class="loader"></div>
+                </div>
+                <div id="expert-answer" class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-slate-700 leading-relaxed" style="display: none;"></div>
+            </div>
+        </section>
+
+        <section id="section-6">
+            <h2 class="text-3xl font-bold mb-2 text-center text-slate-800">6. Phân Tích Tác Động Từ Tin Tức</h2>
+            <p class="text-center text-lg mb-8 text-slate-600">Nhập một chủ đề tin tức (ví dụ: "OPEC cắt giảm sản lượng") để AI phân tích tác động tiềm tàng đến giá xăng Việt Nam.</p>
+            <div class="bg-white p-8 rounded-xl shadow-lg max-w-4xl mx-auto">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <input type="text" id="news-topic-input" class="flex-grow p-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none" placeholder="Nhập chủ đề tin tức ở đây...">
+                    <button id="analyze-news-btn" class="bg-teal-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-teal-700 transition duration-200 flex items-center justify-center">
+                        ✨ Phân tích
+                    </button>
+                </div>
+                 <div id="news-loader" class="mt-6 hidden justify-center">
+                    <div class="loader"></div>
+                </div>
+                <div id="news-analysis" class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 text-slate-700 leading-relaxed" style="display: none;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-6 text-center text-slate-400">
+            <p>&copy; 2025 - Phân tích bởi AI. Thông tin chỉ mang tính chất tham khảo và minh họa.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const usdPriceInput = document.getElementById('usd-price');
+            const rateSlider = document.getElementById('exchange-rate-slider');
+            const rateDisplay = document.getElementById('rate-display');
+            const vndPriceDisplay = document.getElementById('vnd-price');
+
+            const formatter = new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND',
+                minimumFractionDigits: 0
+            });
+
+            function updateSimulator() {
+                const usdPrice = parseFloat(usdPriceInput.value) || 0;
+                const rate = parseFloat(rateSlider.value);
+                const vndPrice = usdPrice * rate;
+
+                rateDisplay.textContent = new Intl.NumberFormat('vi-VN').format(rate);
+                vndPriceDisplay.textContent = formatter.format(vndPrice);
+            }
+
+            usdPriceInput.addEventListener('input', updateSimulator);
+            rateSlider.addEventListener('input', updateSimulator);
+            
+            updateSimulator();
+
+            const scenarioTitle = document.getElementById('scenario-title');
+            const scenarioText = document.getElementById('scenario-text');
+            const btnIncrease = document.getElementById('btn-increase');
+            const btnDecrease = document.getElementById('btn-decrease');
+
+            const textIncrease = `
+                <p>Giả sử tỷ giá tăng từ <span class="font-semibold">25,000</span> lên <span class="font-semibold">26,000</span> VND/USD.</p>
+                <p>Doanh nghiệp sẽ phải bỏ ra nhiều tiền Việt hơn để mua cùng một lượng USD. Điều này làm <span class="font-bold text-red-600">tăng chi phí đầu vào</span> bằng VND, dù giá dầu thế giới không đổi.</p>
+                <p class="p-3 bg-red-50 text-red-800 rounded-lg">➡️ <span class="font-bold">Tác động tiêu cực:</span> Gây áp lực làm tăng giá bán lẻ xăng dầu trong nước để bù đắp chi phí.</p>
+            `;
+            const textDecrease = `
+                <p>Giả sử tỷ giá giảm từ <span class="font-semibold">25,000</span> xuống <span class="font-semibold">24,000</span> VND/USD.</p>
+                <p>Doanh nghiệp sẽ chỉ cần bỏ ra ít tiền Việt hơn để mua cùng một lượng USD. Điều này làm <span class="font-bold text-green-600">giảm chi phí đầu vào</span> bằng VND.</p>
+                <p class="p-3 bg-green-50 text-green-800 rounded-lg">➡️ <span class="font-bold">Tác động tích cực:</span> Giảm áp lực lên giá bán lẻ, có thể giúp bình ổn hoặc giảm giá xăng dầu.</p>
+            `;
+
+            const basePriceUSD = 80;
+            const baseRate = 25000;
+            const increasedRate = 26000;
+            const decreasedRate = 24000;
+
+            const baseCostVND = basePriceUSD * baseRate;
+            const increasedCostVND = basePriceUSD * increasedRate;
+            const decreasedCostVND = basePriceUSD * decreasedRate;
+
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Giá Gốc (VND)', 'Giá Sau Thay Đổi (VND)'],
+                    datasets: [{
+                        label: 'Chi phí nhập khẩu 1 thùng dầu (VND)',
+                        data: [baseCostVND, increasedCostVND],
+                        backgroundColor: ['rgba(59, 130, 246, 0.6)', 'rgba(239, 68, 68, 0.6)'],
+                        borderColor: ['rgba(59, 130, 246, 1)', 'rgba(239, 68, 68, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true, ticks: { callback: (v) => new Intl.NumberFormat('vi-VN').format(v) + ' ₫' } } },
+                    plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => `${c.dataset.label || ''}: ${formatter.format(c.parsed.y)}` } } }
+                }
+            });
+
+            function updateScenario(type) {
+                if (type === 'increase') {
+                    btnIncrease.classList.add('btn-active');
+                    btnDecrease.classList.remove('btn-active');
+                    scenarioTitle.textContent = 'Kịch bản 1: Tỷ giá USD/VND tăng (VND mất giá)';
+                    scenarioText.innerHTML = textIncrease;
+                    impactChart.data.datasets[0].data = [baseCostVND, increasedCostVND];
+                    impactChart.data.datasets[0].backgroundColor = ['rgba(59, 130, 246, 0.6)', 'rgba(239, 68, 68, 0.6)'];
+                    impactChart.data.datasets[0].borderColor = ['rgba(59, 130, 246, 1)', 'rgba(239, 68, 68, 1)'];
+
+                } else {
+                    btnDecrease.classList.add('btn-active');
+                    btnIncrease.classList.remove('btn-active');
+                    scenarioTitle.textContent = 'Kịch bản 2: Tỷ giá USD/VND giảm (VND lên giá)';
+                    scenarioText.innerHTML = textDecrease;
+                    impactChart.data.datasets[0].data = [baseCostVND, decreasedCostVND];
+                    impactChart.data.datasets[0].backgroundColor = ['rgba(59, 130, 246, 0.6)', 'rgba(22, 163, 74, 0.6)'];
+                    impactChart.data.datasets[0].borderColor = ['rgba(59, 130, 246, 1)', 'rgba(22, 163, 74, 1)'];
+                }
+                impactChart.update();
+            }
+
+            btnIncrease.addEventListener('click', () => updateScenario('increase'));
+            btnDecrease.addEventListener('click', () => updateScenario('decrease'));
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            function formatResponseText(text) {
+                return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>');
+            }
+
+            async function callGeminiAPI(prompt, systemInstruction = null, useSearch = false, retries = 3, delay = 1000) {
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                if (useSearch) payload.tools = [{ "google_search": {} }];
+                if (systemInstruction) payload.systemInstruction = { parts: [{ text: systemInstruction }] };
+
+                for (let i = 0; i < retries; i++) {
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                        const result = await response.json();
+                        const candidate = result.candidates?.[0];
+                        if (candidate && candidate.content?.parts?.[0]?.text) {
+                            return candidate.content.parts[0].text;
+                        } else {
+                            throw new Error("Invalid response structure from API.");
+                        }
+                    } catch (error) {
+                        console.error(`Attempt ${i + 1} failed:`, error);
+                        if (i === retries - 1) return "Đã xảy ra lỗi khi kết nối đến AI. Vui lòng thử lại sau.";
+                        await new Promise(res => setTimeout(res, delay));
+                        delay *= 2;
+                    }
+                }
+            }
+
+            const askExpertBtn = document.getElementById('ask-expert-btn');
+            const expertQuestionInput = document.getElementById('ai-expert-question');
+            const expertAnswerDiv = document.getElementById('expert-answer');
+            const expertLoader = document.getElementById('expert-loader');
+            
+            askExpertBtn.addEventListener('click', async () => {
+                const question = expertQuestionInput.value.trim();
+                if (!question) return;
+
+                expertAnswerDiv.style.display = 'none';
+                expertLoader.style.display = 'flex';
+                askExpertBtn.disabled = true;
+
+                const systemInstruction = "Bạn là một chuyên gia kinh tế thân thiện. Hãy trả lời các câu hỏi về kinh tế, tài chính, và các chủ đề liên quan một cách đơn giản, rõ ràng và dễ hiểu cho người không có chuyên môn. Sử dụng ví dụ từ Việt Nam khi phù hợp.";
+                const response = await callGeminiAPI(question, systemInstruction, false);
+
+                expertAnswerDiv.innerHTML = formatResponseText(response);
+                expertLoader.style.display = 'none';
+                expertAnswerDiv.style.display = 'block';
+                askExpertBtn.disabled = false;
+            });
+
+            const analyzeNewsBtn = document.getElementById('analyze-news-btn');
+            const newsTopicInput = document.getElementById('news-topic-input');
+            const newsAnalysisDiv = document.getElementById('news-analysis');
+            const newsLoader = document.getElementById('news-loader');
+
+            analyzeNewsBtn.addEventListener('click', async () => {
+                const topic = newsTopicInput.value.trim();
+                if (!topic) return;
+
+                newsAnalysisDiv.style.display = 'none';
+                newsLoader.style.display = 'flex';
+                analyzeNewsBtn.disabled = true;
+
+                const prompt = `Dựa trên những thông tin mới nhất từ tìm kiếm trên web, hãy phân tích ngắn gọn những tác động có thể có của chủ đề sau đây đối với giá xăng dầu tại Việt Nam: "${topic}". Trình bày các điểm chính một cách rõ ràng và súc tích.`;
+                const response = await callGeminiAPI(prompt, null, true);
+
+                newsAnalysisDiv.innerHTML = formatResponseText(response);
+                newsLoader.style.display = 'none';
+                newsAnalysisDiv.style.display = 'block';
+                analyzeNewsBtn.disabled = false;
+            });
+        });
+    </script>
+</body>
+</html>
+
